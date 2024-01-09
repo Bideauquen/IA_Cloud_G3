@@ -57,7 +57,7 @@ def insert_into_mysql(review):
     cursor = connection.cursor()
 
     query = """
-        INSERT INTO reviews (userName, reviewTitle, rating, comment, date, source, restaurantName)
+        INSERT INTO trustPilot (userName, reviewTitle, rating, comment, date, source, restaurantName)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
 
@@ -92,7 +92,7 @@ def scraping():
     return all_avis_soup, i
 
 avis, pages = scraping()
-print("PAGES", pages)
+# print("PAGES", pages)
 # print("Avis page 3", [text.p.text for text in avis[2]])
 
 for page_idx, html_article_list in enumerate(avis, 1):

@@ -1,6 +1,6 @@
 USE reviews;
 
-CREATE TABLE reviews (
+CREATE TABLE trustPilot (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userName VARCHAR(255),
     rating INT,
