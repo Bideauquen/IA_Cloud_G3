@@ -7,9 +7,9 @@ pip install -r requirements.txt
 
 ## Initialize the mySql database (from trustPilot data => McdonaldFr):
 
-- To do once, then once it's initialized you only have to do: ```docker-compose up```
+- To do only once, once it's initialized you only have to do: ```docker-compose up```
 
-```docker-compose up```
+```docker-compose up``` (keep it running in a terminal)
 
 ```python scrapping/trustpilot.py ```
 
