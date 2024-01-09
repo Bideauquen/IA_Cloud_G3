@@ -11,7 +11,7 @@ def parse_review(article):
     userName = article.find('span', class_='typography_heading-xxs__QKBS8')
     review_data['userName'] = userName.get_text(strip=True) if userName else None
     
-    # Extrait le nom de l'utilisateur
+    # Extrait le titre de la review
     reviewTitle = article.find('h2', class_='typography_heading-s__f7029')
     review_data['reviewTitle'] = reviewTitle.get_text(strip=True) if reviewTitle else None
 
@@ -52,8 +52,8 @@ def insert_into_mysql(review):
     cursor = connection.cursor()
 
     query = """
-        INSERT INTO reviews (userName, reviewTitle, rating, comment, date)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO reviews (userName, reviewTitle, rating, comment, date, source)
+        VALUES (%s, %s, %s, %s, %s, %s)
     """
 
     data = (
@@ -61,7 +61,8 @@ def insert_into_mysql(review):
         review['reviewTitle'],
         review['rating'],
         review['comment'],
-        review['date']
+        review['date'],
+        "TrustPilot"
     )
 
     cursor.execute(query, data)
