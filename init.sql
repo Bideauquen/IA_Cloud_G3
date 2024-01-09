@@ -7,5 +7,6 @@ CREATE TABLE reviews (
     reviewTitle VARCHAR(255),
     comment TEXT,
     date VARCHAR(255),
-    source VARCHAR(255)
+    source VARCHAR(255),
+    restaurantName VARCHAR(255)
 );
