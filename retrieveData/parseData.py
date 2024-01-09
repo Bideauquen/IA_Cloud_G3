@@ -78,7 +78,6 @@ for idx, html_article in enumerate(html_content_trustPilot, 1):
     for review in reviews:
         insert_into_mysql(review)
 
-
 # for idx, html_article in enumerate(html_content_trustPilot, 1):
 #     reviews = parse_html(html_article)
 
