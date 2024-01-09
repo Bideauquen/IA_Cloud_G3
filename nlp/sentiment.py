@@ -6,5 +6,5 @@ distilled_student_sentiment_classifier = pipeline(
 )
 
 # english
-response = distilled_student_sentiment_classifier ("I love this movie and i would watch it again and again!")
+response = distilled_student_sentiment_classifier ("L’ambiance est très agréable et le restaurant est propre. L’équipe rapide et souriante. Merci pour Alexandra de son accueil et aide sur le menu ☺️")
 print(response)
