@@ -1,8 +1,16 @@
-from transformers import T5Tokenizer, T5ForConditionalGeneration
+from transformers import pipeline
+from transformers import pipeline
 
-tokenizer = T5Tokenizer.from_pretrained("t5-small")
-model = T5ForConditionalGeneration.from_pretrained("t5-small")
+class EnFrTranslator:
+    def __init__(self):
+        self.translator = pipeline("translation", model="Helsinki-NLP/opus-mt-en-fr")
 
-input_ids = tokenizer("translate English to French: The house is wonderful.", return_tensors="pt").input_ids
-outputs = model.generate(input_ids)
-print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+    def translate(self, text):
+        translated = self.translator(text)
+        return translated[0]['translation_text']
+
+if __name__ == "__main__":
+    translator = EnFrTranslator()
+    text = "The weather is beautiful today."
+    translated_text = translator.translate(text)
+    print(f"Translated text: {translated_text}")
