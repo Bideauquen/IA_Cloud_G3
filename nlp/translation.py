@@ -7,6 +7,7 @@ class EnFrTranslator:
 
     def translate(self, text):
         translated = self.translator(text)
+        print(translated)
         return translated[0]['translation_text']
 
 if __name__ == "__main__":
