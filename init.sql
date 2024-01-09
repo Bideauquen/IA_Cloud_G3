@@ -6,5 +6,6 @@ CREATE TABLE reviews (
     rating INT,
     reviewTitle VARCHAR(255),
     comment TEXT,
-    date VARCHAR(255)
+    date VARCHAR(255),
+    source VARCHAR(255)
 );
