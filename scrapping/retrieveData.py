@@ -1,30 +1,39 @@
 import mysql.connector
 
-def retrieve_trustpilot_data_from_mysql():
-    connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        port=3307,
-        password="password",
-        database="reviews"
-    )
+class DataRetriever:
+    def __init__(self):
+        self.connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            port=3307,
+            password="password",
+            database="reviews"
+        )
 
-    cursor = connection.cursor()
+    def retrieve_trustpilot_data_from_mysql(self):
+        cursor = self.connection.cursor()
 
-    query = """
-        SELECT userName, reviewTitle, rating, comment, date, source, restaurantName
-        FROM trustPilot
-    """
+        query = """
+            SELECT userName, reviewTitle, rating, comment, date, source, restaurantName
+            FROM trustPilot
+        """
 
-    cursor.execute(query)
-    result = cursor.fetchall()
+        cursor.execute(query)
+        result = cursor.fetchall()
 
-    cursor.close()
-    connection.close()
+        cursor.close()
 
-    return result
+        return result
 
-data = retrieve_trustpilot_data_from_mysql()
+    def close_connection(self):
+        self.connection.close()
 
-for row in data:
-    print(row)
+if __name__ == "__main__":
+    # Example usage:
+    retriever = DataRetriever()
+    data = retriever.retrieve_trustpilot_data_from_mysql()
+
+    for row in data:
+        print(row)
+
+    retriever.close_connection()
