@@ -1,8 +1,17 @@
-#map { width : 80vw; height: 80vh; margin : auto; display: block; }
+#map { 
+    width : 80vw; 
+    height: 80vh; 
+    margin : auto; 
+    display: block;
+    border : 2px solid #ddd;
+    border-radius: 10px;
+    overflow : hidden;
+    box-shadow : 0 4px 8px rgba(0,0,0,0.2);
+}    
 
 body {
     font-family: 'Robot', sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f8f8f8;
     margin: 0;
     padding: 0;
 }
@@ -14,4 +23,7 @@ h1 {
     font-weight: 400;
     color: #333;
     margin-top: 20px;
+    padding : 10px;
+    border-radius : 8px;
+    background-color: #ecf0f1;
 }
