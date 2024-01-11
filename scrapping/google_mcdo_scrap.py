@@ -120,16 +120,26 @@ async def run(playwright: Playwright) -> None:
     hrefs = await get_class(page)
     avis = []
 
-    for href in hrefs : 
+    """for href in hrefs : 
         await collect_avis(page, href, avis)
 
-
+"""
+    await collect_avis(page, hrefs[0], avis)
+    await collect_avis(page, hrefs[1], avis)
+    await collect_avis(page, hrefs[2], avis)
+    await collect_avis(page, hrefs[3], avis)
+    await collect_avis(page, hrefs[4], avis)
+    await collect_avis(page, hrefs[5], avis)
+    await collect_avis(page, hrefs[6], avis)
     await page.screenshot(path='screenshot.png')
 
 #    print("HREFS", hrefs)
-    print("LEN",len(hrefs))
-#    print("PREMIER AVIS", avis[0].nth(1))
-    print("SIZE PAR RESTO", await avis[0].count())
+#    print("LEN",len(avis))
+#    print("PREMIER AVIS", avis[0].nth(0))
+#    print("SIZE PAR RESTO", await avis[0].count())
+    await click_balise(avis[0].nth(0), '//button[@aria-label="Voir plus"]')
+    text = await avis[0].nth(0).locator('//span[@class="wiI7pd"]').first.inner_text()
+    print(text)
     await context.close()
 
     await browser.close()
