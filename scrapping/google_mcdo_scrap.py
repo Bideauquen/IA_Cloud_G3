@@ -29,10 +29,20 @@ async def scroll(page, balise, scroll_number):
 
 async def get_class(page):
     classes = []
-    localisations = await page.locator('//a[@class="hfpxzc"]')
-    for loc in localisations:
-        classes.append(loc.get_attribute(''))
+    localisations = page.locator('//a[@class="hfpxzc"]')
+    for i in range(await localisations.count()):
+        loc = localisations.nth(i)
+        classes.append(await loc.get_attribute('href'))
 
+    return classes
+
+async def collect_avis(page, href, avis):
+    balise = f'//a[@href="{href}"]'
+    await click_balise(page, balise)
+    await click_text(page, 'Avis')
+    await scroll(page, '//div[@class="m6QErb DxyBCb kA9KIf dS8AEf "]', 6)
+    avis_soup = page.locator('//div[@class="jftiEf fontBodyMedium "]')
+    avis.append(avis_soup)
 
 async def extract_data(page):
     review_box_xpath = '//div[@jscontroller="fIQYlf"] '
@@ -105,9 +115,21 @@ async def run(playwright: Playwright) -> None:
 
     await click_text(page, 'Maps')
     await page.wait_for_url('**google.com/maps/**')
-    await scroll(page, '//div[@class="k7jAl lJ3Kh w6Uhzf miFGmb"]', 4)
-    await page.screenshot(path="screenshot.png")
+    await scroll(page, '//div[@class="k7jAl lJ3Kh w6Uhzf miFGmb"]', 5)
+   # await page.screenshot(path="screenshot.png")
+    hrefs = await get_class(page)
+    avis = []
 
+    for href in hrefs : 
+        await collect_avis(page, href, avis)
+
+
+    await page.screenshot(path='screenshot.png')
+
+#    print("HREFS", hrefs)
+    print("LEN",len(hrefs))
+#    print("PREMIER AVIS", avis[0].nth(1))
+    print("SIZE PAR RESTO", await avis[0].count())
     await context.close()
 
     await browser.close()
