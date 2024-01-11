@@ -1,7 +1,7 @@
 import mysql.connector
 from scrapping.data import ScrappedReview
 
-class DataRetriever:
+class DataConnector:
     def __init__(self):
         self.connection = mysql.connector.connect(
             host="localhost",
@@ -15,8 +15,13 @@ class DataRetriever:
     
         cursor = self.connection.cursor()
 
+        if table == "trustPilot":
+            columns = ["userName", "rating", "reviewTitle", "comment", "date", "source", "company"]
+        else :
+            columns = ["userName", "rating", "reviewTitle", "comment", "date", "source", "restaurant"] # Google Reviews
+
         query = f"""
-            SELECT userName, reviewTitle, rating, comment, date, source, restaurantName
+            SELECT {', '.join(columns)}
             FROM {table}
         """
 
@@ -24,9 +29,15 @@ class DataRetriever:
         result = cursor.fetchall()
 
         cursor.close()
-
         # Convert to list of ScrappedReview objects
-        result = [ScrappedReview(userName=row[0], reviewTitle=row[1], rating=row[2], comment=row[3] if row[3] is not None else "", date=row[4], source=row[5], restaurantName=row[6]) for row in result]
+        result = [ScrappedReview(userName=row[0], 
+                                 rating=row[1],
+                                 reviewTitle=row[2], 
+                                 comment=row[3] if row[3] is not None else "", 
+                                 date=row[4], 
+                                 source=table,
+                                 company=row[6] if table == "trustPilot" else -1,
+                                 restaurant=row[6] if table == "google" else -1) for row in result]
 
         return result
 
@@ -35,7 +46,7 @@ class DataRetriever:
 
 if __name__ == "__main__":
     # Example usage:
-    retriever = DataRetriever()
+    retriever = DataConnector()
     data = retriever.retrieve_data_from_mysql("trustPilot")
     
     for row in data:

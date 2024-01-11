@@ -2,105 +2,149 @@ import requests
 from bs4 import BeautifulSoup
 import mysql.connector
 
-def extract_review_details(review):
-    reviewData = {}
+class TrustPilotScrapper:
+    def __init__(self, company_url, company_name):
+        self.company_url = company_url
+        self.company_name = company_name
+        self.connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            port=3307,
+            password="password",
+            database="reviews"
+        )
 
-    # Extrait le nom de l'utilisateur
-    userName = review.find('span', class_='typography_heading-xxs__QKBS8')
-    reviewData['userName'] = userName.get_text(strip=True) if userName else None
-    
-    # Extrait le titre de la review
-    reviewTitle = review.find('h2', class_='typography_heading-s__f7029')
-    reviewData['reviewTitle'] = reviewTitle.get_text(strip=True) if reviewTitle else None
+    def extract_review_details(self, review):
+        reviewData = {}
 
-    # Extrait la note
-    rating = review.find('div', class_='star-rating_starRating__4rrcf')
-    reviewData['rating'] = int(rating.img['alt'][5]) if rating and rating.img['alt'][5].isdigit() else None
+        # Extract the user name
+        userName = review.find('span', class_='typography_heading-xxs__QKBS8')
+        reviewData['userName'] = userName.get_text(strip=True) if userName else None
 
-    # Extrait le commentaire
-    comment = review.find('p', class_='typography_body-l__KUYFJ')
-    reviewData['comment'] = comment.get_text(strip=True) if comment else None
+        # Extract the review title
+        reviewTitle = review.find('h2', class_='typography_heading-s__f7029')
+        reviewData['reviewTitle'] = reviewTitle.get_text(strip=True) if reviewTitle else None
 
-    # Extrait la date de l'expérience
-    date = review.find('p', class_='typography_body-m__xgxZ_')
-    reviewData['date'] = date.get_text(strip=True) if date else None
+        # Extract the rating
+        rating = review.find('div', class_='star-rating_starRating__4rrcf')
+        reviewData['rating'] = int(rating.img['alt'][5]) if rating and rating.img['alt'][5].isdigit() else None
 
-    return reviewData
+        # Extract the comment
+        comment = review.find('p', class_='typography_body-l__KUYFJ')
+        reviewData['comment'] = comment.get_text(strip=True) if comment else None
 
-def parse_html(html):
-    if html is None:
-        return []
-    
-    try:
-        soup = BeautifulSoup(str(html), 'html.parser')
-        articles = soup.find_all('article', class_='paper_paper__1PY90')
+        # Extract the date of the experience
+        date = review.find('p', class_='typography_body-m__xgxZ_')
+        reviewData['date'] = date.get_text(strip=True) if date else None
 
-        reviews = []
-        for article in articles:
-            review = extract_review_details(article)
-            reviews.append(review)
+        return reviewData
 
-        return reviews
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return []
+    def parse_html(self, html):
+        if html is None:
+            return []
 
-def insert_into_mysql(review):
-    connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        port = 3307,
-        password="password",
-        database="reviews"
-    )
+        try:
+            soup = BeautifulSoup(str(html), 'html.parser')
+            articles = soup.find_all('article', class_='paper_paper__1PY90')
 
-    cursor = connection.cursor()
+            reviews = []
+            for article in articles:
+                review = self.extract_review_details(article)
+                reviews.append(review)
 
-    query = """
-        INSERT INTO trustPilot (userName, reviewTitle, rating, comment, date, source, restaurantName)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-    """
+            return reviews
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return []
 
-    data = (
-        review['userName'],
-        review['reviewTitle'],
-        review['rating'],
-        review['comment'],
-        review['date'],
-        "TrustPilot",
-        "McDonaldFr"
-    )
+    def insert_company_into_mysql(self, company_name):
+        cursor = self.connection.cursor()
 
-    cursor.execute(query, data)
-    connection.commit()
-    cursor.close()
-    connection.close()
-    
-    
-def scraping():
-    response = requests.get('https://fr.trustpilot.com/review/mcdonalds.fr')
-    i = 2
-    all_avis_soup = []
-    while response.status_code == 200 :
-        soup = BeautifulSoup(response.content, "html.parser")
+        # Test if the company already exists in the database
+        query = "SELECT id FROM companies WHERE name = %s"
+        cursor.execute(query, (company_name,))
+        result = cursor.fetchone()
+        
+        if result is None:
+            query = """
+                INSERT INTO companies (name, ecoScore, ratings, reviewCount)
+                VALUES (%s, %s, %s, %s)
+            """
 
-        avis_soup = soup.find_all('article', attrs={'class':"paper_paper__1PY90 paper_outline__lwsUX card_card__lQWDv card_noPadding__D8PcU styles_reviewCard__hcAvl"})
-        all_avis_soup.append(avis_soup)
-        response = requests.get(f'https://fr.trustpilot.com/review/mcdonalds.fr?page={i}')
-        i = i+1
-    i=i-1
-    return all_avis_soup, i
+            data = (company_name,
+                    None,
+                    None,
+                    0)
 
-avis, pages = scraping()
-# print("PAGES", pages)
-# print("Avis page 3", [text.p.text for text in avis[2]])
+            cursor.execute(query, data)
 
-for page_idx, html_article_list in enumerate(avis, 1):
-    # Itération sur les éléments de la liste html_article_list
-    for html_article in html_article_list:
-        if html_article is not None:
-            reviews = parse_html(html_article)
+            # Get the company id
+            company_id = cursor.lastrowid
+            self.connection.commit()
+            cursor.close()
+        else:
+            company_id = result[0]
+        return company_id
 
-            # Insére les critiques dans MySQL
-            for review in reviews:
-                insert_into_mysql(review)
+
+    def insert_review_into_mysql(self, review, company_id):
+
+        cursor = self.connection.cursor()
+
+        query = """
+            INSERT INTO trustPilot (userName, rating, reviewTitle, comment, date, company)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """
+
+        data = (
+            review['userName'],
+            review['rating'],
+            review['reviewTitle'],
+            review['comment'],
+            review['date'],
+            company_id,
+        )
+
+        cursor.execute(query, data)
+        self.connection.commit()
+        cursor.close()
+
+    def scrape_company(self):
+        response = requests.get(self.company_url)
+        i = 2
+        all_reviews_soup = []
+        while response.status_code == 200:
+            soup = BeautifulSoup(response.content, "html.parser")
+
+            reviews_soup = soup.find_all('article', attrs={'class':"paper_paper__1PY90 paper_outline__lwsUX card_card__lQWDv card_noPadding__D8PcU styles_reviewCard__hcAvl"})
+            all_reviews_soup.append(reviews_soup)
+            response = requests.get(f'{self.company_url}?page={i}')
+            i += 1
+        i -= 1
+
+        # Insert the company into the companies table
+        company_id = self.insert_company_into_mysql(self.company_name)
+
+        for page_idx, html_article_list in enumerate(all_reviews_soup, 1):
+            for html_article in html_article_list:
+                if html_article is not None:
+                    reviews = self.parse_html(html_article)
+                    
+                    # Insert the reviews into the reviews table
+                    for review in reviews:
+                        self.insert_review_into_mysql(review, company_id)
+        
+        self.connection.close()
+
+if __name__ == "__main__":
+    companies = [
+        ('https://fr.trustpilot.com/review/www.hippopotamus.fr', 'Hippopotamus France'),
+        ('https://fr.trustpilot.com/review/mcdonalds.fr', 'Mcdonalds France'),
+        ('https://fr.trustpilot.com/review/buffalo-grill.fr', 'Bufallo Grill'),
+        ('https://fr.trustpilot.com/review/kfc.fr', 'KFC France')
+    ]
+
+    for company_url, company_name in companies:
+        scrapper = TrustPilotScrapper(company_url, company_name)
+        scrapper.scrape_company()
+
