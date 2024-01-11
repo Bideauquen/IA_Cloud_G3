@@ -140,7 +140,7 @@ if __name__ == "__main__":
     companies = [
         ('https://fr.trustpilot.com/review/www.hippopotamus.fr', 'Hippopotamus France'),
         ('https://fr.trustpilot.com/review/mcdonalds.fr', 'Mcdonalds France'),
-        ('https://fr.trustpilot.com/review/buffalo-grill.fr', 'Bufallo Grill'),
+        ('https://fr.trustpilot.com/review/buffalo-grill.fr', 'Buffalo Grill'),
         ('https://fr.trustpilot.com/review/flunch.fr', 'Flunch'),
         ('https://fr.trustpilot.com/review/ayakosushi.fr', 'Ayako Sushi'),
         ('https://fr.trustpilot.com/review/sushishop.fr', 'Sushi Shop'),
