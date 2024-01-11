@@ -45,11 +45,11 @@ def parse_html(html):
         print(f"An error occurred: {e}")
         return []
 
-def insert_into_mysql(review):
+def insert_into_mysql(review, restaurant_name):
     connection = mysql.connector.connect(
         host="localhost",
         user="root",
-        port = 3307,
+        port=3307,
         password="password",
         database="reviews"
     )
@@ -68,39 +68,42 @@ def insert_into_mysql(review):
         review['comment'],
         review['date'],
         "TrustPilot",
-        "McDonaldFr"
+        restaurant_name
     )
 
     cursor.execute(query, data)
     connection.commit()
     cursor.close()
     connection.close()
-    
-    
-def scraping():
-    response = requests.get('https://fr.trustpilot.com/review/mcdonalds.fr')
+
+def scraping(restaurant_url, restaurant_name):
+    response = requests.get(restaurant_url)
     i = 2
     all_avis_soup = []
-    while response.status_code == 200 :
+    while response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
 
         avis_soup = soup.find_all('article', attrs={'class':"paper_paper__1PY90 paper_outline__lwsUX card_card__lQWDv card_noPadding__D8PcU styles_reviewCard__hcAvl"})
         all_avis_soup.append(avis_soup)
-        response = requests.get(f'https://fr.trustpilot.com/review/mcdonalds.fr?page={i}')
-        i = i+1
-    i=i-1
+        response = requests.get(f'{restaurant_url}?page={i}')
+        i += 1
+    i -= 1
     return all_avis_soup, i
 
-avis, pages = scraping()
-# print("PAGES", pages)
-# print("Avis page 3", [text.p.text for text in avis[2]])
+restaurants = [
+    ('https://fr.trustpilot.com/review/www.hippopotamus.fr', 'Hippopotamus France'),
+    ('https://fr.trustpilot.com/review/mcdonalds.fr', 'Mcdonalds France'),
+    ('https://fr.trustpilot.com/review/buffalo-grill.fr', 'Bufallo Grill'),
+    ('https://fr.trustpilot.com/review/kfc.fr', 'KFC France')
+]
 
-for page_idx, html_article_list in enumerate(avis, 1):
-    # Itération sur les éléments de la liste html_article_list
-    for html_article in html_article_list:
-        if html_article is not None:
-            reviews = parse_html(html_article)
+for restaurant_url, restaurant_name in restaurants:
+    avis, pages = scraping(restaurant_url, restaurant_name)
 
-            # Insére les critiques dans MySQL
-            for review in reviews:
-                insert_into_mysql(review)
+    for page_idx, html_article_list in enumerate(avis, 1):
+        for html_article in html_article_list:
+            if html_article is not None:
+                reviews = parse_html(html_article)
+
+                for review in reviews:
+                    insert_into_mysql(review, restaurant_name)
