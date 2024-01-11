@@ -1,5 +1,6 @@
 import asyncio
 import mysql.connector
+import time
 import re
 
 from playwright.async_api import Playwright, async_playwright
@@ -25,7 +26,7 @@ async def scroll(page, balise, scroll_number):
 
         #page_number += 1
 
-        await page.wait_for_timeout(2000)
+        await page.wait_for_timeout(1000)
 
 async def get_class(page):
     classes = []
@@ -39,10 +40,22 @@ async def get_class(page):
 async def collect_avis(page, href, avis):
     balise = f'//a[@href="{href}"]'
     await click_balise(page, balise)
-    await click_text(page, 'Avis')
-    await scroll(page, '//div[@class="m6QErb DxyBCb kA9KIf dS8AEf "]', 6)
-    avis_soup = page.locator('//div[@class="jftiEf fontBodyMedium "]')
-    avis.append(avis_soup)
+    adresse = await page.locator('//div[@class="Io6YTe fontBodyMedium kR99db "]').first.inner_text()
+    time.sleep(3)
+
+    try:
+        await click_text(page, 'Avis')
+        time.sleep(3)
+
+        await scroll(page, '//div[@class="cVwbnc IlRKB"]', 10)
+        avis_soup = page.locator('//div[@class="jftiEf fontBodyMedium "]')
+        data = {
+            'adresse' : adresse,
+            'locators' : avis_soup
+        }
+        avis.append(data)
+    except:
+        pass
 
 async def extract_data(page):
     review_box_xpath = '//div[@jscontroller="fIQYlf"] '
@@ -121,10 +134,10 @@ async def click_voir_plus(review_locator):
     if await voir_plus_button.count() > 0:
         await voir_plus_button.first.click()
 
-async def run(playwright: Playwright) -> None:
+async def run(playwright: Playwright, search_term) -> None:
 
     webkit = playwright.webkit
-    browser = await webkit.launch()
+    browser = await webkit.launch(headless=False)
 
     context = await browser.new_context()
 
@@ -136,7 +149,7 @@ async def run(playwright: Playwright) -> None:
 
     await click_balise(page,'//button[@id="L2AGLb"]' )
 
-    search_term = "mc donald"
+#    search_term = "mc donald"
     await page.locator("[aria-label=\"Rech.\"]").type(search_term)
 
     await page.keyboard.press('Enter')
@@ -146,13 +159,18 @@ async def run(playwright: Playwright) -> None:
     await click_text(page, 'Maps')
     await page.wait_for_url('**google.com/maps/**')
     await scroll(page, '//div[@class="k7jAl lJ3Kh w6Uhzf miFGmb"]', 5)
-   # await page.screenshot(path="screenshot.png")
+    await page.screenshot(path="screenshot.png")
     hrefs = await get_class(page)
     avis = []
 
-    for href in hrefs : 
-        await collect_avis(page, href, avis)
+    # for href in hrefs : 
+    #     await collect_avis(page, href, avis)
 
+    await collect_avis(page, hrefs[0], avis)
+    await collect_avis(page, hrefs[1], avis)
+    await collect_avis(page, hrefs[2], avis)
+    await collect_avis(page, hrefs[3], avis)
+    
     await page.screenshot(path='screenshot.png')
     
     for avis_item in avis:
@@ -178,9 +196,16 @@ async def run(playwright: Playwright) -> None:
             await insert_into_mysql(review_data)
 
 #    print("HREFS", hrefs)
-    # print("LEN",len(hrefs))
-#    print("PREMIER AVIS", avis[0].nth(1))
-    # print("SIZE PAR RESTO", await avis[0].count())
+    print("LEN",len(avis))
+#    print("PREMIER AVIS", avis[0].nth(0))
+    print("SIZE PAR RESTO", await avis[0]['locators'].count())
+    try:
+        await click_balise(avis[0]['locators'].nth(0), '//button[@aria-label="Voir plus"]')
+    except:
+        pass
+    text = await avis[0]['locators'].nth(0).locator('//span[@class="wiI7pd"]').first.inner_text()
+    print(text)
+    print(avis[0]['adresse'])
     await context.close()
 
     await browser.close()
@@ -189,7 +214,7 @@ async def run(playwright: Playwright) -> None:
 async def main():
     async with async_playwright() as playwright:
 
-        await run(playwright)
+        await run(playwright, 'flunch')
 
 asyncio.run(main())
 
