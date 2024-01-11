@@ -140,10 +140,7 @@ async def run(playwright: Playwright, search_term) -> None:
     await collect_avis(page, hrefs[1], avis)
     await collect_avis(page, hrefs[2], avis)
     await collect_avis(page, hrefs[3], avis)
-    await collect_avis(page, hrefs[4], avis)
-    await collect_avis(page, hrefs[5], avis)
-    await collect_avis(page, hrefs[6], avis)
-    #time.sleep(10)
+    
     await page.screenshot(path='screenshot.png')
 
 #    print("HREFS", hrefs)
@@ -165,7 +162,7 @@ async def run(playwright: Playwright, search_term) -> None:
 async def main():
     async with async_playwright() as playwright:
 
-        await run(playwright, 'subway')
+        await run(playwright, 'flunch')
 
 asyncio.run(main())
 
