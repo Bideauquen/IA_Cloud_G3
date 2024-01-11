@@ -3,20 +3,28 @@ from transformers import pipeline
 class EcoCategorizer:
     def __init__(self):
         self.classifier = pipeline("zero-shot-classification", model="MoritzLaurer/deberta-v3-large-zeroshot-v1.1-all-33")
-        self.classes = ["organic, pesticide, antibiotics, health conscious", 
+        self.categories = ["organic, pesticide, antibiotics, health", 
                         "climate, vegan, renewable, local", 
-                        "waste, plastic, recycling, packaging", 
-                        "socially conscious, diverse, ethical",
-                        "governance, transparency, responsible",
-                        "water, plastic free, pollution, ocean, fish",
-                        "greenwashing, misleading, lobbying",
+                        "waste, plastic, packaging",
+                        "social, diversity, ethics",
+                        "governance, transparency",
+                        "water management, ocean pollution",
+                        "greenwashing, lobbying",
                         "other topics"]
+        self.classes = ["environment, ecology", "other topics"]
 
         self.hypothesis_template = "This review is about {}"
 
     def classify_review(self, review):
         output = self.classifier(review, self.classes, hypothesis_template=self.hypothesis_template, multi_label=False)
-        return output["labels"][0].split(",")[0], output["scores"][0]
+        return output["labels"][0]
+
+    def categorize_review(self, review):
+        """
+        Categorize a list of reviews
+        """
+        output = self.classifier(review, self.categories, hypothesis_template=self.hypothesis_template, multi_label=False)
+        return output["labels"][0].split(", ")[0], output["scores"][0]
 
 if __name__ == "__main__":
     # Example usage
