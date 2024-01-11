@@ -10,3 +10,13 @@ CREATE TABLE trustPilot (
     source VARCHAR(255),
     restaurantName VARCHAR(255)
 );
+
+CREATE TABLE googleMaps (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userName VARCHAR(255),
+    rating INT,
+    comment TEXT,
+    date VARCHAR(255),
+    source VARCHAR(255),
+    restaurantName VARCHAR(255)
+);

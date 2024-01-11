@@ -1,6 +1,6 @@
 import asyncio
-
-import json
+import mysql.connector
+import re
 
 from playwright.async_api import Playwright, async_playwright
 
@@ -80,16 +80,43 @@ async def extract_data(page):
         rating = rating.split(",")[0].split(":")[1] if rating else None
 
         data.append({
-
             'author_name': author_name,
-
             'review': review,
-
             'rating': rating
 
         })
 
     return data
+
+async def insert_into_mysql(review_data):
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        port=3307,
+        password="password",
+        database="reviews"
+    )
+
+    cursor = connection.cursor()
+
+    query = """
+        INSERT INTO googleMaps (userName, rating, comment, date, source, restaurantName)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """
+    
+    data = (
+        review_data['user'],
+        review_data['rating'],
+        review_data['text'],
+        review_data['date'],
+        'Google Maps',
+        'McDonalds France'
+    )
+
+    cursor.execute(query, data)
+    connection.commit()
+    cursor.close()
+    connection.close()
 
 async def run(playwright: Playwright) -> None:
 
@@ -120,26 +147,34 @@ async def run(playwright: Playwright) -> None:
     hrefs = await get_class(page)
     avis = []
 
-    """for href in hrefs : 
+    for href in hrefs : 
         await collect_avis(page, href, avis)
 
-"""
-    await collect_avis(page, hrefs[0], avis)
-    await collect_avis(page, hrefs[1], avis)
-    await collect_avis(page, hrefs[2], avis)
-    await collect_avis(page, hrefs[3], avis)
-    await collect_avis(page, hrefs[4], avis)
-    await collect_avis(page, hrefs[5], avis)
-    await collect_avis(page, hrefs[6], avis)
     await page.screenshot(path='screenshot.png')
+    
+    for individual_review in await avis[0].all():
+        await click_balise(individual_review, '//button[@aria-label="Voir plus"]')
+
+        text = await individual_review.locator('//span[@class="wiI7pd"]').first.inner_text()
+        date = await individual_review.locator('//div[@class="PIpr3c"]').first.inner_text()
+        user = await individual_review.locator('//div[@class="d4r55 "]').first.inner_text()
+        rating_with_text = await individual_review.locator('//span[@class="kvMYJc"]').first.get_attribute('aria-label')
+        rating_match = re.search(r'\d+', rating_with_text)
+        rating = rating_match.group() if rating_match else None
+
+        review_data = {
+            'user': user,
+            'text': text,
+            'date': date,
+            'rating': rating
+        }
+
+        await insert_into_mysql(review_data)
 
 #    print("HREFS", hrefs)
-#    print("LEN",len(avis))
-#    print("PREMIER AVIS", avis[0].nth(0))
-#    print("SIZE PAR RESTO", await avis[0].count())
-    await click_balise(avis[0].nth(0), '//button[@aria-label="Voir plus"]')
-    text = await avis[0].nth(0).locator('//span[@class="wiI7pd"]').first.inner_text()
-    print(text)
+    # print("LEN",len(hrefs))
+#    print("PREMIER AVIS", avis[0].nth(1))
+    # print("SIZE PAR RESTO", await avis[0].count())
     await context.close()
 
     await browser.close()
