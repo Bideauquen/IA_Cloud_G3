@@ -91,7 +91,7 @@ async def extract_data(page):
 
     return data
 
-async def run(playwright: Playwright) -> None:
+async def run(playwright: Playwright, search_term) -> None:
 
     webkit = playwright.webkit
     browser = await webkit.launch()
@@ -106,7 +106,7 @@ async def run(playwright: Playwright) -> None:
 
     await click_balise(page,'//button[@id="L2AGLb"]' )
 
-    search_term = "mc donald"
+#    search_term = "mc donald"
     await page.locator("[aria-label=\"Rech.\"]").type(search_term)
 
     await page.keyboard.press('Enter')
@@ -116,7 +116,7 @@ async def run(playwright: Playwright) -> None:
     await click_text(page, 'Maps')
     await page.wait_for_url('**google.com/maps/**')
     await scroll(page, '//div[@class="k7jAl lJ3Kh w6Uhzf miFGmb"]', 5)
-   # await page.screenshot(path="screenshot.png")
+    await page.screenshot(path="screenshot.png")
     hrefs = await get_class(page)
     avis = []
 
@@ -130,7 +130,7 @@ async def run(playwright: Playwright) -> None:
     await collect_avis(page, hrefs[3], avis)
     await collect_avis(page, hrefs[4], avis)
     await collect_avis(page, hrefs[5], avis)
-    await collect_avis(page, hrefs[6], avis)
+#    await collect_avis(page, hrefs[6], avis)
     await page.screenshot(path='screenshot.png')
 
 #    print("HREFS", hrefs)
@@ -148,7 +148,7 @@ async def run(playwright: Playwright) -> None:
 async def main():
     async with async_playwright() as playwright:
 
-        await run(playwright)
+        await run(playwright, 'flunch')
 
 asyncio.run(main())
 
