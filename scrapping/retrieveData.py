@@ -1,4 +1,5 @@
 import mysql.connector
+from scrapping.data import ScrappedReview
 
 class DataRetriever:
     def __init__(self):
@@ -10,18 +11,22 @@ class DataRetriever:
             database="reviews"
         )
 
-    def retrieve_trustpilot_data_from_mysql(self):
+    def retrieve_data_from_mysql(self, table: str) -> list[ScrappedReview]:
+    
         cursor = self.connection.cursor()
 
-        query = """
+        query = f"""
             SELECT userName, reviewTitle, rating, comment, date, source, restaurantName
-            FROM trustPilot
+            FROM {table}
         """
 
         cursor.execute(query)
         result = cursor.fetchall()
 
         cursor.close()
+
+        # Convert to list of ScrappedReview objects
+        result = [ScrappedReview(userName=row[0], reviewTitle=row[1], rating=row[2], comment=row[3] if row[3] is not None else "", date=row[4], source=row[5], restaurantName=row[6]) for row in result]
 
         return result
 
@@ -31,9 +36,9 @@ class DataRetriever:
 if __name__ == "__main__":
     # Example usage:
     retriever = DataRetriever()
-    data = retriever.retrieve_trustpilot_data_from_mysql()
-
+    data = retriever.retrieve_data_from_mysql("trustPilot")
+    
     for row in data:
-        print(row)
+        print(row.comment)
 
     retriever.close_connection()
