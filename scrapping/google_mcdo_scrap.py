@@ -44,6 +44,50 @@ async def collect_avis(page, href, avis):
     avis_soup = page.locator('//div[@class="jftiEf fontBodyMedium "]')
     avis.append(avis_soup)
 
+async def extract_data(page):
+    review_box_xpath = '//div[@jscontroller="fIQYlf"] '
+
+    review_xpath = '//span[@data-expandable-section]'
+
+    secondary_review_xpath = '//span[@class="review-full-text"]'
+
+    author_xpath = '//div[@class="TSUbDb"]'
+
+    rating_xpath = '//span[@class="lTi8oc z3HNkc"]'
+
+    await page.wait_for_selector(review_box_xpath)
+
+    review_box = page.locator(review_box_xpath)
+
+    data = []
+
+    for review_box_index in range(await review_box.count()):
+
+        result_elem = review_box.nth(review_box_index)
+
+        review = await result_elem.locator(review_xpath).first.inner_text()
+
+        review = review if review else await result_elem.locator(
+
+            secondary_review_xpath).inner_text()
+
+        author_name = await result_elem.locator(author_xpath).inner_text()
+
+        rating = await result_elem.locator(
+
+            rating_xpath).first.get_attribute('aria-label')
+
+        rating = rating.split(",")[0].split(":")[1] if rating else None
+
+        data.append({
+            'author_name': author_name,
+            'review': review,
+            'rating': rating
+
+        })
+
+    return data
+
 async def insert_into_mysql(review_data):
     connection = mysql.connector.connect(
         host="localhost",
@@ -71,19 +115,28 @@ async def insert_into_mysql(review_data):
     connection.commit()
     cursor.close()
     connection.close()
+    
+async def click_voir_plus(review_locator):
+    voir_plus_button = review_locator.locator('//button[@aria-label="Voir plus"]')
+    if await voir_plus_button.count() > 0:
+        await voir_plus_button.first.click()
 
-async def run(playwright: Playwright, search_term) -> None:
+async def run(playwright: Playwright) -> None:
 
     webkit = playwright.webkit
     browser = await webkit.launch()
+
     context = await browser.new_context()
+
+
     page = await context.new_page()
+
 
     await page.goto("https://www.google.com/")
 
     await click_balise(page,'//button[@id="L2AGLb"]' )
 
-    # search_term = "mc donald"
+    search_term = "mc donald"
     await page.locator("[aria-label=\"Rech.\"]").type(search_term)
 
     await page.keyboard.press('Enter')
@@ -97,35 +150,32 @@ async def run(playwright: Playwright, search_term) -> None:
     hrefs = await get_class(page)
     avis = []
 
-    #VRAI BOUCLE A UTILISER POUR TOUT RECUPERER
-    # for href in hrefs : 
-    #     await collect_avis(page, href, avis)
-        
-    #TEMPORAIRE POUR LES TESTS
-    await collect_avis(page, hrefs[5], avis)
-    await collect_avis(page, hrefs[6], avis)
+    for href in hrefs : 
+        await collect_avis(page, href, avis)
 
     await page.screenshot(path='screenshot.png')
     
-    for individual_review in await avis[0].all():
-        await click_balise(individual_review, '//button[@aria-label="Voir plus"]')
+    for avis_item in avis:
+        for individual_review in await avis_item.all():
+            await click_voir_plus(individual_review)
+            
+            # Scroll ? timeout
 
-        text = await individual_review.locator('//span[@class="wiI7pd"]').first.inner_text()
-        date = await individual_review.locator('//div[@class="PIpr3c"]').first.inner_text()
-        user = await individual_review.locator('//div[@class="d4r55 "]').first.inner_text()
-        rating_with_text = await individual_review.locator('//span[@class="kvMYJc"]').first.get_attribute('aria-label')
-        rating_match = re.search(r'\d+', rating_with_text)
-        rating = rating_match.group() if rating_match else None
+            text = await individual_review.locator('//span[@class="wiI7pd"]').first.inner_text()
+            date = await individual_review.locator('//div[@class="PIpr3c"]').first.inner_text()
+            user = await individual_review.locator('//div[@class="d4r55 "]').first.inner_text()
+            rating_with_text = await individual_review.locator('//span[@class="kvMYJc"]').first.get_attribute('aria-label')
+            rating_match = re.search(r'\d+', rating_with_text)
+            rating = rating_match.group() if rating_match else None
 
-        review_data = {
-            'user': user,
-            'text': text,
-            'date': date,
-            'rating': rating,
-            'restaurant': search_term
-        }
+            review_data = {
+                'user': user,
+                'text': text,
+                'date': date,
+                'rating': rating
+            }
 
-        await insert_into_mysql(review_data)
+            await insert_into_mysql(review_data)
 
 #    print("HREFS", hrefs)
     # print("LEN",len(hrefs))
@@ -137,19 +187,9 @@ async def run(playwright: Playwright, search_term) -> None:
 
 
 async def main():
-    companies = ['Hippopotamus France', 
-                 'Buffalo Grill', 
-                 'Flunch', 
-                 'Mcdonald', 
-                 'Ayako Sushi',
-                 'Sushi Shop',
-                 'Subway',
-                 'KFC France']
-    
     async with async_playwright() as playwright:
 
-        for company_name in companies:
-            await run(playwright, company_name)
+        await run(playwright)
 
 asyncio.run(main())
 
