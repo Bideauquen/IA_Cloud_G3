@@ -7,7 +7,7 @@ class SentimentClassifier:
             top_k=1,
         )
     
-    def classify_sentiment(self, review):
+    def classify_sentiment(self, review) -> tuple[str, float]:
         response = self.distilled_student_sentiment_classifier(review)[0]
         return response[0]["label"], response[0]["score"]
 
