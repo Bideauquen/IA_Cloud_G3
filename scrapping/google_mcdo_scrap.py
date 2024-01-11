@@ -100,17 +100,15 @@ async def insert_into_mysql(review_data):
     cursor = connection.cursor()
 
     query = """
-        INSERT INTO googleMaps (userName, rating, comment, date, source, restaurantName)
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO google (userName, rating, comment, date)
+        VALUES (%s, %s, %s, %s)
     """
     
     data = (
         review_data['user'],
         review_data['rating'],
         review_data['text'],
-        review_data['date'],
-        'Google Maps',
-        'McDonalds France'
+        review_data['date']
     )
 
     cursor.execute(query, data)
