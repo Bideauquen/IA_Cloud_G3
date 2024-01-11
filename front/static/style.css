@@ -1,0 +1,17 @@
+#map { width : 80vw; height: 80vh; margin : auto; display: block; }
+
+body {
+    font-family: 'Robot', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-family: 'Incosolata', monospace;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 400;
+    color: #333;
+    margin-top: 20px;
+}
