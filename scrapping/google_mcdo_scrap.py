@@ -76,12 +76,8 @@ async def run(playwright: Playwright, search_term) -> None:
 
     webkit = playwright.webkit
     browser = await webkit.launch()
-
     context = await browser.new_context()
-
-
     page = await context.new_page()
-
 
     await page.goto("https://www.google.com/")
 
@@ -101,11 +97,13 @@ async def run(playwright: Playwright, search_term) -> None:
     hrefs = await get_class(page)
     avis = []
 
+    #VRAI BOUCLE A UTILISER POUR TOUT RECUPERER
     # for href in hrefs : 
     #     await collect_avis(page, href, avis)
         
-    await collect_avis(page, hrefs[3], avis)
-    await collect_avis(page, hrefs[4], avis)
+    #TEMPORAIRE POUR LES TESTS
+    await collect_avis(page, hrefs[5], avis)
+    await collect_avis(page, hrefs[6], avis)
 
     await page.screenshot(path='screenshot.png')
     
