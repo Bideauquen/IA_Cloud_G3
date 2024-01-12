@@ -3,16 +3,16 @@
         {
             "name": "Mcdonalds France",
             "id": 1,
-            "ecoScore": -1,
-            "ratings": "",
-            "reviewCount": 0
+            "ecoScore": 5,
+            "ratings": "1.223529411764706, 1.2307692307692308, 2.125",
+            "reviewCount": 106
         },
         {
             "name": "KFC France",
             "id": 2,
-            "ecoScore": -1,
-            "ratings": "",
-            "reviewCount": 0
+            "ecoScore": 1,
+            "ratings": "None, 1.0, None",
+            "reviewCount": 1
         }
     ]
 }
