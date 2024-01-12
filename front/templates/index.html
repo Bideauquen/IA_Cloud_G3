@@ -26,7 +26,7 @@
                 pointsOfInterest.forEach(point => {
                     var marker=L.marker(point.coordinates)
                         .addTo(map)
-                        .bindPopup(point.name +' <br> ' +point.address);
+                        .bindPopup(point.name +' <br> ' +point.address + ' <br> Moyenne environnement de la chaine: ' + point.rating[0] + '<br> Moyenne santé de la chaine : ' + point.rating[1] + '<br>Moyenne gouvernance de la chaine : ' + point.rating[2]);
                         if (point.rating < 2.1) {
                             marker._icon.classList.add("huechangeR");
                         } else if (point.rating < 3.2) {
