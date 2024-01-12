@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <h1>Simple Map</h1>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([43.31742605377338, -0.35596160821618056], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a hrep="https://openstreetmap.org">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Charger la liste de points d'intérêt depuis un fichier JSON externe
+        fetch('/static/data.json')
+            .then(response => response.json())
+            .then(pointsOfInterest => {
+                // Ajouter des marqueurs pour chaque point d'intérêt
+                pointsOfInterest.forEach(point => {
+                    var marker=L.marker(point.coordinates)
+                        .addTo(map)
+                        .bindPopup(point.name);
+                        if (point.rating < 2.1) {
+                            marker._icon.classList.add("huechangeR");
+                        } else if (point.rating < 3.2) {
+                            marker._icon.classList.add("huechangeO");
+                        } else if (point.rating < 4.3) {
+                            marker._icon.classList.add("huechangeJ");
+                        } else {
+                            marker._icon.classList.add("huechangeV");
+                        }
+                });
+            })
+            .catch(error => console.error('Erreur de chargement des points d\'intérêt:', error));
+    </script>
+</html>

@@ -9,9 +9,9 @@ class EcoCategorizer:
                         "social, diversity, ethics",
                         "governance, transparency",
                         "water management, ocean pollution",
-                        "greenwashing, profit on the back of ecology",
+                        "greenwashing, lobbying",
                         "other topics"]
-        self.classes = ["environment, ecology", "other topics"]
+        self.classes = ["environment concerns", "other topics"]
 
         self.hypothesis_template = "This review is about {}"
 

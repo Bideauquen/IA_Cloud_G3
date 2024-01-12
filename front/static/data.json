@@ -1,0 +1,7 @@
+[
+    { "name": "Billère", "coordinates": [43.3000, -0.3800], "rating" : 3.8 },
+    { "name": "Pau", "coordinates": [43.2984, -0.3700], "rating" : 2.1 },
+    { "name": "Bizanos", "coordinates": [43.300, -0.31], "rating" : 5 },
+    { "name": "Jurançon", "coordinates": [43.2872, -0.3841], "rating" : 1 }
+  ]
+  
