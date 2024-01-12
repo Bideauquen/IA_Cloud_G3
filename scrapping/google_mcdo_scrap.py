@@ -44,7 +44,7 @@ async def click_voir_plus(review_locator):
     except:
         pass
 
-async def collect_avis(page, href, company_name):
+async def collect_avis(page, href, avis, company_name):
     balise = f'//a[@href="{href}"]'
     await click_balise(page, balise)
     adresse = await page.locator('//div[@class="Io6YTe fontBodyMedium kR99db "]').first.inner_text()
@@ -55,22 +55,22 @@ async def collect_avis(page, href, company_name):
         await scroll(page, '//div[@class="cVwbnc IlRKB"]', 10)
         avis_soup = page.locator('//div[@class="jftiEf fontBodyMedium "]')
 
-        print("traitement")
         await process_reviews(page, avis_soup, company_name, adresse)
     except:
         pass
 
 async def process_reviews(page, avis_soup, company_name, adresse):
-    for individual_review in await avis_soup.all():
-        review_data = await extract_review_data(page, individual_review, company_name, adresse)
-        print("extract")
-        await insert_into_mysql(review_data, company_name)
+    try:
+        for individual_review in await avis_soup.all():
+            review_data = await extract_review_data(page, individual_review, company_name, adresse)
+            await insert_into_mysql(review_data, company_name)
+    except Exception as e:
+        print(f"Erreur lors du traitement des avis : {e}")
     
-async def extract_review_data(individual_review, search_term, adresse):
+async def extract_review_data(page, individual_review, search_term, adresse):
     await click_voir_plus(individual_review)
 
     text = await individual_review.locator('//span[@class="wiI7pd"]').first.inner_text()
-    print(text)
     date_nb = await individual_review.locator('//div[@class="PIpr3c"]').count()
     
     if date_nb > 0:
@@ -101,14 +101,11 @@ async def insert_into_mysql(review_data, company_name):
         database="reviews"
     )
     cursor = connection.cursor(buffered=True)
-    print("connexion")
 
     # Vérifie si la société existe déjà dans la base de données
     query = "SELECT id FROM companies WHERE name = %s"
     cursor.execute(query, (company_name,))
     company_result = cursor.fetchone()
-    print(company_result)
-    print('existe')
 
     if company_result is None:
         # Si la société n'existe pas, la créé
@@ -126,8 +123,6 @@ async def insert_into_mysql(review_data, company_name):
         cursor.execute(query, (company_name,))
         company_id_result = cursor.fetchone()
         company_id = company_id_result[0]
-        print('new')
-        print(company_id)
     else:
         # Si la société existe déjà, récupère son ID
         company_id = company_result[0]
@@ -166,7 +161,7 @@ async def insert_into_mysql(review_data, company_name):
         review_data['rating'],
         review_data['text'],
         review_data['date'],
-        restaurant_id,
+        restaurant_id
     )
 
     cursor.execute(query, data)
@@ -201,14 +196,14 @@ async def run(playwright: Playwright, search_term) -> None:
     avis = []
     
     # VRAIE BOUCLE POUR PLUS DE RESTAU
-    # for href in hrefs : 
-    #  await collect_avis(page, href, avis)
+    for href in hrefs : 
+     await collect_avis(page, href, avis, search_term)
 
     # TEMPORAIRE POUR TESTS
-    await collect_avis(page, hrefs[0], avis)
-    # await collect_avis(page, hrefs[1], avis)
-    # await collect_avis(page, hrefs[2], avis)
-    # await collect_avis(page, hrefs[3], avis)
+    # await collect_avis(page, hrefs[0], avis, search_term)
+    # await collect_avis(page, hrefs[1], avis, search_term)
+    # await collect_avis(page, hrefs[2], avis, search_term)
+    # await collect_avis(page, hrefs[3], avis, search_term)
     
     await page.screenshot(path='screenshot.png')
 
@@ -230,7 +225,8 @@ async def run(playwright: Playwright, search_term) -> None:
 
 async def main():
     companies = [
-                 'Mcdonald']
+                 'Mcdonald',
+                 'KFC France']
     async with async_playwright() as playwright:
 
         for company_name in companies:
