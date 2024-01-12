@@ -1,719 +1,977 @@
-{
-    "restaurants": [
+[
         {
             "id": 1,
             "name": "Mcdonald",
             "company": 2,
             "address": "Alésia, 71 Av. du Général Leclerc, 75014 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3276707,
+            "latitude": 48.8283836,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8283836,
+                2.3276707
+            ]
         },
         {
             "id": 2,
             "name": "Mcdonald",
             "company": 2,
             "address": "Denfert, 5 Av. du Général Leclerc, 75014 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3325219,
+            "latitude": 48.8333251,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8333251,
+                2.3325219
+            ]
         },
         {
             "id": 3,
             "name": "Mcdonald",
             "company": 2,
             "address": "27 Rue du Départ, 75014 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.322474,
+            "latitude": 48.8415881,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8415881,
+                2.322474
+            ]
         },
         {
             "id": 4,
             "name": "Mcdonald",
             "company": 2,
             "address": "79 Rue Lecourbe, 75015 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.305017,
+            "latitude": 48.84315770000001,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.84315770000001,
+                2.305017
+            ]
         },
         {
             "id": 5,
             "name": "Mcdonald",
             "company": 2,
             "address": "167 Rue de Rennes, 75006 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3247497,
+            "latitude": 48.8444822,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8444822,
+                2.3247497
+            ]
         },
         {
             "id": 6,
             "name": "Mcdonald",
             "company": 2,
             "address": "Rue Jean Bleuzen 110-112, 92170 Vanves",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.2988117,
+            "latitude": 48.8242343,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8242343,
+                2.2988117
+            ]
         },
         {
             "id": 7,
             "name": "Mcdonald",
             "company": 2,
             "address": "Les, 2 Bd Arago, 75013 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3506198,
+            "latitude": 48.8366388,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8366388,
+                2.3506198
+            ]
         },
         {
             "id": 8,
             "name": "Mcdonald",
             "company": 2,
             "address": "192 Rue de la Convention, 75015 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.2954789,
+            "latitude": 48.837379,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.837379,
+                2.2954789
+            ]
         },
         {
             "id": 9,
             "name": "Mcdonald",
             "company": 2,
             "address": "Centre Commercial Italie, 30 Av. d'Italie 2, 75013 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3551844,
+            "latitude": 48.8303381,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8303381,
+                2.3551844
+            ]
         },
         {
             "id": 10,
             "name": "Mcdonald",
             "company": 2,
             "address": "Bd Vincent Auriol 211-213, 75013 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3570359,
+            "latitude": 48.8308401,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8308401,
+                2.3570359
+            ]
         },
         {
             "id": 11,
             "name": "Mcdonald",
             "company": 2,
             "address": "82-84 Av. d'Italie, 75013 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3570008,
+            "latitude": 48.82593989999999,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.82593989999999,
+                2.3570008
+            ]
         },
         {
             "id": 12,
             "name": "Mcdonald",
             "company": 2,
             "address": "1 Rue du Commerce, 75015 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.2973828,
+            "latitude": 48.84850660000001,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.84850660000001,
+                2.2973828
+            ]
         },
         {
             "id": 13,
             "name": "Mcdonald",
             "company": 2,
             "address": "Centre commercial La Vache Noire, Av. Aristide Briand, 94110 Arcueil",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.32767,
+            "latitude": 48.80977,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.80977,
+                2.32767
+            ]
         },
         {
             "id": 14,
             "name": "Mcdonald",
             "company": 2,
             "address": "98 Bd Saint-Germain, 75005 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3438037,
+            "latitude": 48.8514281,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8514281,
+                2.3438037
+            ]
         },
         {
             "id": 15,
             "name": "Mcdonald",
             "company": 2,
             "address": "Av. de Choisy 9-11, 75013 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3640191,
+            "latitude": 48.8206454,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8206454,
+                2.3640191
+            ]
         },
         {
             "id": 16,
             "name": "Mcdonald",
             "company": 2,
             "address": "63, Avenue De Fontainebleau Centre Commercial Okabé - 2ème Étage, 94270 Le Kremlin-Bicêtre",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.362091,
+            "latitude": 48.811936,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.811936,
+                2.362091
+            ]
         },
         {
             "id": 17,
             "name": "Mcdonald",
             "company": 2,
             "address": "48 Rue Linois, 75015 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.2848817,
+            "latitude": 48.8468595,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8468595,
+                2.2848817
+            ]
         },
         {
             "id": 18,
             "name": "Mcdonald",
             "company": 2,
             "address": "4-6 Rue Louis Armand, 75015 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.2769943,
+            "latitude": 48.8329111,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8329111,
+                2.2769943
+            ]
         },
         {
             "id": 19,
             "name": "Mcdonald",
             "company": 2,
             "address": "80 Rue Traversière, 75012 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3762214,
+            "latitude": 48.8510542,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8510542,
+                2.3762214
+            ]
         },
         {
             "id": 20,
             "name": "Mcdonald",
             "company": 2,
             "address": "4, Boulevard Richard Lenoir, Pl. de la Bastille, 75011 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3699606,
+            "latitude": 48.853936,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.853936,
+                2.3699606
+            ]
         },
         {
             "id": 21,
             "name": "Mcdonald",
             "company": 2,
             "address": "5 Rue du Renard, 75004 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3515059,
+            "latitude": 48.8580139,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8580139,
+                2.3515059
+            ]
         },
         {
             "id": 22,
             "name": "Mcdonald",
             "company": 2,
             "address": "Place De Passy, 22 Rue Duban, 75016 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.2774136,
+            "latitude": 48.8572761,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8572761,
+                2.2774136
+            ]
         },
         {
             "id": 23,
             "name": "Mcdonald",
             "company": 2,
             "address": "12 Rue Berger, 75001 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.348225,
+            "latitude": 48.8609777,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8609777,
+                2.348225
+            ]
         },
         {
             "id": 24,
             "name": "Mcdonald",
             "company": 2,
             "address": "Av. Aristide Briand 149/151, 94230 Cachan",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3208256,
+            "latitude": 48.7922952,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.7922952,
+                2.3208256
+            ]
         },
         {
             "id": 25,
             "name": "Mcdonald",
             "company": 2,
             "address": "184 Rue de Rivoli, 75001 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3336566,
+            "latitude": 48.8634612,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8634612,
+                2.3336566
+            ]
         },
         {
             "id": 26,
             "name": "Mcdonald",
             "company": 2,
             "address": "17 Rue De L'arc En Ciel, 75001 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.345772,
+            "latitude": 48.8619093,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8619093,
+                2.345772
+            ]
         },
         {
             "id": 27,
             "name": "Mcdonald",
             "company": 2,
             "address": "116 Bd Diderot, 75012 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3866518,
+            "latitude": 48.84714090000001,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.84714090000001,
+                2.3866518
+            ]
         },
         {
             "id": 28,
             "name": "Mcdonald",
             "company": 2,
             "address": "116 Rue de Rivoli, 75001 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.346134,
+            "latitude": 48.859354,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.859354,
+                2.346134
+            ]
         },
         {
             "id": 29,
             "name": "Mcdonald",
             "company": 2,
             "address": "99 Rue de Rivoli, 75001 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3348003,
+            "latitude": 48.8627657,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8627657,
+                2.3348003
+            ]
         },
         {
             "id": 30,
             "name": "Mcdonald",
             "company": 2,
             "address": "123 Bd Maxime Gorki, 94800 Villejuif",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.369915,
+            "latitude": 48.791999,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.791999,
+                2.369915
+            ]
         },
         {
             "id": 31,
             "name": "Mcdonald",
             "company": 2,
             "address": "88 bis Ave Parmentier, 75011 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3748401,
+            "latitude": 48.8654665,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8654665,
+                2.3748401
+            ]
         },
         {
             "id": 32,
             "name": "KFC France",
             "company": 8,
             "address": "4 Av. Jean Moulin, 75014 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.325879,
+            "latitude": 48.8277392,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8277392,
+                2.325879
+            ]
         },
         {
             "id": 33,
             "name": "KFC France",
             "company": 8,
             "address": "349 Rue de Vaugirard, 75015 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.296485,
+            "latitude": 48.8369173,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8369173,
+                2.296485
+            ]
         },
         {
             "id": 34,
             "name": "KFC France",
             "company": 8,
             "address": "211-213 Bd Vincent Auriol, 75013 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3570359,
+            "latitude": 48.8308401,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8308401,
+                2.3570359
+            ]
         },
         {
             "id": 35,
             "name": "KFC France",
             "company": 8,
             "address": "27 Bd Gabriel Péri, 93110 Rosny-sous-Bois",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.4789738,
+            "latitude": 48.8770775,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8770775,
+                2.4789738
+            ]
         },
         {
             "id": 36,
             "name": "KFC France",
             "company": 8,
             "address": "21 Pl. de la République, 75003 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3623163,
+            "latitude": 48.8676809,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8676809,
+                2.3623163
+            ]
         },
         {
             "id": 37,
             "name": "KFC France",
             "company": 8,
             "address": "35 Bd Ney, 75018 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3440512,
+            "latitude": 48.8977659,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8977659,
+                2.3440512
+            ]
         },
         {
             "id": 38,
             "name": "KFC France",
             "company": 8,
             "address": "5 Bd Beaumarchais, 75004 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3685745,
+            "latitude": 48.8541998,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8541998,
+                2.3685745
+            ]
         },
         {
             "id": 39,
             "name": "KFC France",
             "company": 8,
             "address": "Av. de la France libre, 94000 Créteil",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.4550487,
+            "latitude": 48.7795583,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.7795583,
+                2.4550487
+            ]
         },
         {
             "id": 40,
             "name": "KFC France",
             "company": 8,
             "address": "76 Av. d'Italie, 75013 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3569208,
+            "latitude": 48.8263349,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8263349,
+                2.3569208
+            ]
         },
         {
             "id": 41,
             "name": "KFC France",
             "company": 8,
             "address": "2 Bd du Maréchal Foch, 93330 Neuilly-sur-Marne",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.5205101,
+            "latitude": 48.8537396,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8537396,
+                2.5205101
+            ]
         },
         {
             "id": 42,
             "name": "KFC France",
             "company": 8,
             "address": "Chatelet, 75001 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3472142,
+            "latitude": 48.8595485,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8595485,
+                2.3472142
+            ]
         },
         {
             "id": 43,
             "name": "KFC France",
             "company": 8,
             "address": "1 Bd de Strasbourg, 75010 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3541361,
+            "latitude": 48.8696054,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8696054,
+                2.3541361
+            ]
         },
         {
             "id": 44,
             "name": "KFC France",
             "company": 8,
             "address": "10 Pl. de Clichy, 75009 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3258608,
+            "latitude": 48.8842508,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8842508,
+                2.3258608
+            ]
         },
         {
             "id": 45,
             "name": "KFC France",
             "company": 8,
             "address": "31-35 Bd de Sébastopol, 75001 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3475968,
+            "latitude": 48.8615712,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8615712,
+                2.3475968
+            ]
         },
         {
             "id": 46,
             "name": "KFC France",
             "company": 8,
             "address": "23 Av. Jules Rimet, 93200 Saint-Denis",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3628373,
+            "latitude": 48.9242614,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.9242614,
+                2.3628373
+            ]
         },
         {
             "id": 47,
             "name": "KFC France",
             "company": 8,
             "address": "20 Bd Montmartre, 75009 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.340446,
+            "latitude": 48.8721675,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8721675,
+                2.340446
+            ]
         },
         {
             "id": 48,
             "name": "KFC France",
             "company": 8,
             "address": "101 porte berger, 75001 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3456149,
+            "latitude": 48.861506,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.861506,
+                2.3456149
+            ]
         },
         {
             "id": 49,
             "name": "KFC France",
             "company": 8,
             "address": "117 Rue Saint-Lazare, 75008 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3257158,
+            "latitude": 48.8752706,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8752706,
+                2.3257158
+            ]
         },
         {
             "id": 50,
             "name": "KFC France",
             "company": 8,
             "address": "303 Avenue du Général de Gaulle, 92140 Clamart",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.2493882,
+            "latitude": 48.7841819,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.7841819,
+                2.2493882
+            ]
         },
         {
             "id": 51,
             "name": "KFC France",
             "company": 8,
             "address": "108 Av. Edouard Vaillant, 92100 Boulogne-Billancourt",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.2441238,
+            "latitude": 48.8340536,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8340536,
+                2.2441238
+            ]
         },
         {
             "id": 52,
             "name": "KFC France",
             "company": 8,
             "address": "6 Rue du 8 Mai 1945, 75010 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3573619,
+            "latitude": 48.8764836,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8764836,
+                2.3573619
+            ]
         },
         {
             "id": 53,
             "name": "KFC France",
             "company": 8,
             "address": "38 Av. Jean Lolive, 93500 Pantin",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.4006529,
+            "latitude": 48.8905233,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8905233,
+                2.4006529
+            ]
         },
         {
             "id": 54,
             "name": "KFC France",
             "company": 8,
             "address": "29 Rue de la République, 93200 Saint-Denis",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3557802,
+            "latitude": 48.9360929,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.9360929,
+                2.3557802
+            ]
         },
         {
             "id": 55,
             "name": "KFC France",
             "company": 8,
             "address": "150-152, Bd de Ménilmontant, 75020 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3836933,
+            "latitude": 48.8669738,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8669738,
+                2.3836933
+            ]
         },
         {
             "id": 56,
             "name": "KFC France",
             "company": 8,
             "address": "CC et d'affaire Okabe, 63 Av. de Fontainebleau, 94270 Le Kremlin-Bicêtre",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3621485,
+            "latitude": 48.8113537,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8113537,
+                2.3621485
+            ]
         },
         {
             "id": 57,
             "name": "KFC France",
             "company": 8,
             "address": "Rue Nungesser et Coli, 95500 Gonesse",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.4509954,
+            "latitude": 48.9795793,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.9795793,
+                2.4509954
+            ]
         },
         {
             "id": 58,
             "name": "KFC France",
             "company": 8,
             "address": "Centre Commercial Belle Épine, Rue du Luxembourg, 94320 Thiais",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3718687,
+            "latitude": 48.7566506,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.7566506,
+                2.3718687
+            ]
         },
         {
             "id": 59,
             "name": "KFC France",
             "company": 8,
             "address": "41 Av. de l'Europe, 78140 Vélizy-Villacoublay",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.217041,
+            "latitude": 48.7796219,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.7796219,
+                2.217041
+            ]
         },
         {
             "id": 60,
             "name": "KFC France",
             "company": 8,
             "address": "72 Av. Jean Jaurès, 93500 Pantin",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3920654,
+            "latitude": 48.9033492,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.9033492,
+                2.3920654
+            ]
         },
         {
             "id": 61,
             "name": "KFC France",
             "company": 8,
             "address": "47 Rue Francis Carco, 78370 Plaisir",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 1.9652401,
+            "latitude": 48.8268481,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8268481,
+                1.9652401
+            ]
         },
         {
             "id": 62,
             "name": "KFC France",
             "company": 8,
             "address": "4 Bd Gallieni, 92390 Villeneuve-la-Garenne",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3301573,
+            "latitude": 48.9261103,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.9261103,
+                2.3301573
+            ]
         },
         {
             "id": 63,
             "name": "KFC France",
             "company": 8,
             "address": "185-187 Av. Henri Barbusse, 93000 Bobigny",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.4349187,
+            "latitude": 48.9125994,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.9125994,
+                2.4349187
+            ]
         },
         {
             "id": 64,
             "name": "KFC France",
             "company": 8,
             "address": "195 Av. Division Leclerc, 93430 Villetaneuse",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3428998,
+            "latitude": 48.9496692,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.9496692,
+                2.3428998
+            ]
         },
         {
             "id": 65,
             "name": "Mcdonald",
             "company": 2,
             "address": "Bd de Vaugirard 31, 75015 Paris",
-            "longitude": -1.0,
-            "latitude": -1.0,
+            "longitude": 2.3181935,
+            "latitude": 48.8411876,
             "ecoScore": -1,
             "ratings": "",
-            "reviewCount": 0
+            "reviewCount": 0,
+            "coordinates": [
+                48.8411876,
+                2.3181935
+            ]
         }
-    ]
-}
+]
