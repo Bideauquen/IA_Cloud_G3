@@ -32,3 +32,36 @@ img.huechangeR { filter: hue-rotate(500deg); }
 img.huechangeV { filter: hue-rotate(1000deg); }
 img.huechangeO { filter: hue-rotate(880deg); }
 img.huechangeJ { filter: hue-rotate(220deg); }
+
+#reviewsTable {
+    border-collapse: collapse;
+    width: 80%;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#reviewsTable th, #reviewsTable td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+    font-size: 15px;
+}
+
+#reviewsTable th {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+#reviewsTable th:hover {
+    background-color: #45a049;
+}
+
+.stars {
+    color: gold;
+    font-size: 14px;
+}
