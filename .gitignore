@@ -1,3 +1,6 @@
-.venv
+*.pyc
+*.pyo
+__pycache__/
+.venv/
 scrapping/screenshot.png
 scrapping/google_reviews.json

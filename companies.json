@@ -1,0 +1,18 @@
+{
+    "companies": [
+        {
+            "name": "Mcdonalds France",
+            "id": 1,
+            "ecoScore": -1,
+            "ratings": "",
+            "reviewCount": 0
+        },
+        {
+            "name": "KFC France",
+            "id": 2,
+            "ecoScore": -1,
+            "ratings": "",
+            "reviewCount": 0
+        }
+    ]
+}
