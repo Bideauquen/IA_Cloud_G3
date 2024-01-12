@@ -47,7 +47,7 @@ class ReviewAnalyzer:
                 try :
                     category, conf= self.eco_categorizer.categorize_review(sentence)
                 except :
-                    category,  = "other topics", 0
+                    category, _ = "other topics", 0
 
                 if category != "other topics" and conf > 0.5:
 
@@ -72,8 +72,8 @@ class ReviewAnalyzer:
                                                      category=category, rating=rating, 
                                                      comment=sentence, date=scrap_review.date, 
                                                      source=scrap_review.source, 
-                                                     restaurantName=scrap_review.restaurantName,
-                                                     restaurantAddress=scrap_review.restaurantAddress))
+                                                     company=scrap_review.company,
+                                                     restaurant=scrap_review.restaurant))
         # Merge sentences of the same category
         for i, eco_review in enumerate(eco_review_list):
             for j, eco_review2 in enumerate(eco_review_list):
@@ -87,12 +87,39 @@ if __name__ == "__main__":
     analyzer = ReviewAnalyzer()
     connector = DataConnector()
 
-    data = connector.retrieve_data_from_mysql("trustPilot")
-    print(data)
+    # Retrieve companies and restaurants from MySQL
+    companies, restaurants = connector.retrieve_comp_rest_from_mysql()
+
+    # Store the companies and restaurants in a json file
+    with open('companies.json', 'w') as fp:
+        companies = [company.model_dump() for company in companies]
+        dict = {"companies": companies}
+        json.dump(dict, fp, ensure_ascii=False, indent=4)
+    with open('restaurants.json', 'w') as fp:
+        restaurants = [restaurant.model_dump() for restaurant in restaurants]
+        dict = {"restaurants": restaurants}
+        json.dump(dict, fp, ensure_ascii=False, indent=4)
+
+    data = connector.retrieve_review_from_mysql("google")
     dict = {"eco_reviews": []}
+    """
+    for row in tqdm(data):
+        eco_review_list = analyzer.eco_review(row)
+        for eco_review in eco_review_list:
+            dict["eco_reviews"].append(eco_review.model_dump())
+            print("--------------------")
+            print(eco_review)
+            print("--------------------")
+    """
+    
+    # Save the eco_review in a json file
+    with open('ecoreviews.json', 'w') as fp:  
+        json.dump(dict, fp, ensure_ascii=False, indent=4)         
+
+    data = connector.retrieve_review_from_mysql("trustPilot")
+    
     # Set the columns of the dataframe to the attributes of the EcoReview class
     for row in tqdm(data):
-        
         eco_review_list = analyzer.eco_review(row)
         for eco_review in eco_review_list:
             dict["eco_reviews"].append(eco_review.model_dump())
@@ -100,9 +127,11 @@ if __name__ == "__main__":
             print(eco_review)
             print("--------------------")
     
-    connector.close_connection()
-
-    # Save the dict in a json file
+    # Save the eco_review in a json file
     with open('ecoreviews.json', 'w') as fp:
         json.dump(dict, fp, ensure_ascii=False, indent=4)
+            
+
+    
+    connector.close_connection()
     

@@ -2,3 +2,4 @@ beautifulsoup4
 requests
 playwright
 mysql-connector-python
+pydantic

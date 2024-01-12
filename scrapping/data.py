@@ -20,7 +20,7 @@ class ScrappedReview(BaseModel):
     """
 
     userName: str
-    reviewTitle: str
+    reviewTitle: str = None
     rating: int
     comment: str
     date: str
@@ -76,8 +76,8 @@ class Company(BaseModel):
     """
     name: str
     id : int
-    ecoScore : int = None
-    ratings : str = None
+    ecoScore : int
+    ratings : str
     reviewCount : int = 0
 
 class Restaurant(BaseModel):
@@ -105,8 +105,8 @@ class Restaurant(BaseModel):
     name: str
     company: int
     address: str
-    longitude: float
-    latitude: float
-    ecoScore: int = None
-    ratings: str = None
+    longitude: float = -1
+    latitude: float = -1
+    ecoScore: int
+    ratings: str
     reviewCount: int = 0

@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import mysql.connector
+import datetime
 
 class TrustPilotScrapper:
     def __init__(self, company_url, company_name):
@@ -101,7 +102,7 @@ class TrustPilotScrapper:
             review['rating'],
             review['reviewTitle'],
             review['comment'],
-            review['date'],
+            review['date'].split(":")[1],
             company_id,
         )
 
@@ -138,16 +139,11 @@ class TrustPilotScrapper:
 
 if __name__ == "__main__":
     companies = [
-        ('https://fr.trustpilot.com/review/www.hippopotamus.fr', 'Hippopotamus France'),
         ('https://fr.trustpilot.com/review/mcdonalds.fr', 'Mcdonalds France'),
-        ('https://fr.trustpilot.com/review/buffalo-grill.fr', 'Bufallo Grill'),
-        ('https://fr.trustpilot.com/review/flunch.fr', 'Flunch'),
-        ('https://fr.trustpilot.com/review/ayakosushi.fr', 'Ayako Sushi'),
-        ('https://fr.trustpilot.com/review/sushishop.fr', 'Sushi Shop'),
-        ('https://fr.trustpilot.com/review/subway.com', 'Subway'),
         ('https://fr.trustpilot.com/review/kfc.fr', 'KFC France')
     ]
 
     for company_url, company_name in companies:
         scrapper = TrustPilotScrapper(company_url, company_name)
+        print(f"Scraping {company_name}...")
         scrapper.scrape_company()

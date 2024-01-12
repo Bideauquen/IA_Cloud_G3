@@ -34,7 +34,6 @@ CREATE TABLE google (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userName VARCHAR(255),
     rating INT,
-    reviewTitle VARCHAR(255),
     comment TEXT,
     date VARCHAR(255),
     restaurant INT
