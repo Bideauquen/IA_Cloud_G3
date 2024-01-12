@@ -47,10 +47,14 @@ async def click_voir_plus(review_locator):
 async def collect_avis(page, href, avis, company_name):
     balise = f'//a[@href="{href}"]'
     await click_balise(page, balise)
+    time.sleep(2)
+    await click_text(page, 'Présentation')
     adresse = await page.locator('//div[@class="Io6YTe fontBodyMedium kR99db "]').first.inner_text()
+    time.sleep(2)
 
     try:
         await click_text(page, 'Avis')
+        time.sleep(2)
 
         await scroll(page, '//div[@class="cVwbnc IlRKB"]', 10)
         avis_soup = page.locator('//div[@class="jftiEf fontBodyMedium "]')
