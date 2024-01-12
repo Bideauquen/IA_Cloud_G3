@@ -14,6 +14,11 @@ body {
     background-color: #f8f8f8;
     margin: 0;
     padding: 0;
+    background-image: url('image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 h1 {
@@ -27,6 +32,8 @@ h1 {
     border-radius : 8px;
     background-color: #ecf0f1;
     color: #7ce6b1;
+    margin-left: 10%; 
+    margin-right: 10%;
 }
 
 img.huechangeR { filter: hue-rotate(500deg); }
@@ -43,6 +50,7 @@ img.huechangeJ { filter: hue-rotate(220deg); }
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-left: auto;
     margin-right: auto;
+    background-color: rgba(255, 255, 240, 0.85); 
 }
 
 #reviewsTable th, #reviewsTable td {
