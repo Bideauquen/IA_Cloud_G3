@@ -17,8 +17,8 @@ body {
 }
 
 h1 {
-    font-family: 'Incosolata', monospace;
-    font-size: 2em;
+    font-family: 'Fredericka the Great ', cursive;
+    font-size: 4em;
     text-align: center;
     font-weight: 400;
     color: #333;
@@ -26,6 +26,7 @@ h1 {
     padding : 10px;
     border-radius : 8px;
     background-color: #ecf0f1;
+    color: #7ce6b1;
 }
 
 img.huechangeR { filter: hue-rotate(500deg); }
