@@ -37,7 +37,14 @@ async def get_class(page):
 
     return classes
 
-async def collect_avis(page, href, avis):
+async def click_voir_plus(review_locator):
+    try:
+        await review_locator.locator('//button[@aria-label="Voir plus"]').first.wait_for(timeout=1000)
+        await review_locator.locator('//button[@aria-label="Voir plus"]').first.click()
+    except:
+        pass
+
+async def collect_avis(page, href, company_name):
     balise = f'//a[@href="{href}"]'
     await click_balise(page, balise)
     adresse = await page.locator('//div[@class="Io6YTe fontBodyMedium kR99db "]').first.inner_text()
@@ -47,15 +54,20 @@ async def collect_avis(page, href, avis):
 
         await scroll(page, '//div[@class="cVwbnc IlRKB"]', 10)
         avis_soup = page.locator('//div[@class="jftiEf fontBodyMedium "]')
-        data = {
-            'adresse' : adresse,
-            'locators' : avis_soup
-        }
-        avis.append(data)
+
+        print("traitement")
+        await process_reviews(page, avis_soup, company_name, adresse)
     except:
         pass
+
+async def process_reviews(page, avis_soup, company_name, adresse):
+    for individual_review in await avis_soup.all():
+        review_data = await extract_review_data(page, individual_review, company_name, adresse)
+        print("extract")
+        await insert_into_mysql(review_data, company_name)
     
 async def extract_review_data(individual_review, search_term, adresse):
+    await click_voir_plus(individual_review)
 
     text = await individual_review.locator('//span[@class="wiI7pd"]').first.inner_text()
     print(text)
@@ -89,31 +101,60 @@ async def insert_into_mysql(review_data, company_name):
         database="reviews"
     )
     cursor = connection.cursor(buffered=True)
-    # Check if the restaurant is already in the database
-    # Test if the company already exists in the database
+    print("connexion")
+
+    # Vérifie si la société existe déjà dans la base de données
+    query = "SELECT id FROM companies WHERE name = %s"
+    cursor.execute(query, (company_name,))
+    company_result = cursor.fetchone()
+    print(company_result)
+    print('existe')
+
+    if company_result is None:
+        # Si la société n'existe pas, la créé
+        query = """
+            INSERT INTO companies (name, ecoScore, ratings, reviewCount)
+            VALUES (%s, %s, %s, %s)
+        """
+
+        data = (company_name, None, None, 0)
+        cursor.execute(query, data)
+        connection.commit()
+
+        # Récupère l'ID de la nouvelle société
+        query = "SELECT id FROM companies WHERE name = %s"
+        cursor.execute(query, (company_name,))
+        company_id_result = cursor.fetchone()
+        company_id = company_id_result[0]
+        print('new')
+        print(company_id)
+    else:
+        # Si la société existe déjà, récupère son ID
+        company_id = company_result[0]
+
+    # Vérifie si le restaurant existe déjà dans la base de données
     query = "SELECT id FROM restaurants WHERE address = %s"
     cursor.execute(query, (review_data['adresse'],))
-    result = cursor.fetchone()
+    restaurant_result = cursor.fetchone()
 
-    if result is None:
-        # Insert the restaurant
+    if restaurant_result is None:
+        # Si le restaurant n'existe pas, le créé
         query = """
             INSERT INTO restaurants (name, company, address)
             VALUES (%s, %s, %s)
         """
-        if company_name == 'Mcdonald':
-            company = 2
-        else:
-            company = 8
 
-        cursor.execute(query, (review_data['restaurant'], company, review_data['adresse']))
+        cursor.execute(query, (review_data['restaurant'], company_id, review_data['adresse']))
         connection.commit()
-    
-    # Get the restaurant id
-    query = "SELECT id FROM restaurants WHERE name = %s"
-    cursor.execute(query, (review_data['restaurant'],))
-    result = cursor.fetchone()
-    restaurant_id = result[0]
+
+        # Récupère l'ID du nouveau restaurant
+        query = "SELECT id FROM restaurants WHERE name = %s"
+        cursor.execute(query, (review_data['restaurant'],))
+        restaurant_id_result = cursor.fetchone()
+        restaurant_id = restaurant_id_result[0]
+    else:
+        # Si le restaurant existe déjà, récupère son ID
+        restaurant_id = restaurant_result[0]
 
     query = """
         INSERT INTO google (userName, rating, comment, date, restaurant)
@@ -160,23 +201,16 @@ async def run(playwright: Playwright, search_term) -> None:
     avis = []
     
     # VRAIE BOUCLE POUR PLUS DE RESTAU
-    #for href in hrefs : 
+    # for href in hrefs : 
     #  await collect_avis(page, href, avis)
 
     # TEMPORAIRE POUR TESTS
     await collect_avis(page, hrefs[0], avis)
-    await collect_avis(page, hrefs[1], avis)
-    await collect_avis(page, hrefs[2], avis)
-    await collect_avis(page, hrefs[3], avis)
+    # await collect_avis(page, hrefs[1], avis)
+    # await collect_avis(page, hrefs[2], avis)
+    # await collect_avis(page, hrefs[3], avis)
     
     await page.screenshot(path='screenshot.png')
-    
-    for avis_item in avis:
-        locators = avis_item['locators']
-        
-        for individual_review in await locators.all():
-            review_data = await extract_review_data(individual_review, search_term, avis_item['adresse'])
-            await insert_into_mysql(review_data, search_term)
 
 #    print("HREFS", hrefs)
     # print("LEN",len(avis))
@@ -196,8 +230,7 @@ async def run(playwright: Playwright, search_term) -> None:
 
 async def main():
     companies = [
-                 'Mcdonald',
-                 'KFC France']
+                 'Mcdonald']
     async with async_playwright() as playwright:
 
         for company_name in companies:
