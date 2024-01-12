@@ -13,7 +13,7 @@ class EcoCategorizer:
                         "other topics"]
         self.classes = ["environment concerns", "other topics"]
 
-        self.hypothesis_template = "This review is about {}"
+        self.hypothesis_template = "This restaurant review is about {}"
 
     def classify_review(self, review):
         output = self.classifier(review, self.classes, hypothesis_template=self.hypothesis_template, multi_label=False)

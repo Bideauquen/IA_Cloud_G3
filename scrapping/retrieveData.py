@@ -259,6 +259,19 @@ if __name__ == "__main__":
     # Example usage:
     retriever = DataConnector()
     
+    # Push reviews into MySQL from json file "ecoreviews2.json"
+    with open('ecoreviews2.json', 'r') as fp:
+        data = json.load(fp)
+        for eco_review in data["eco_reviews"]:
+            retriever.push_eco_review_into_mysql(EcoReview(userName=eco_review["userName"], 
+                                                           category=eco_review["category"], 
+                                                           rating=eco_review["rating"], 
+                                                           comment=eco_review["comment"], 
+                                                           date=eco_review["date"], 
+                                                           source=eco_review["source"], 
+                                                           company=eco_review["company"],
+                                                           restaurant=eco_review["restaurant"]))
+
     # Update the scores of the companies
     companies, restaurants = retriever.retrieve_comp_rest_from_mysql()
     for company in companies:
