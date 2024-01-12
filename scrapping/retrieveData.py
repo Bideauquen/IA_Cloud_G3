@@ -1,5 +1,9 @@
 import mysql.connector
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from scrapping.data import ScrappedReview, EcoReview, Company, Restaurant
+import json
 
 class DataConnector:
     def __init__(self):
@@ -108,16 +112,184 @@ class DataConnector:
         cursor.execute(query, data)
         self.connection.commit()
         cursor.close()
+    
+    def push_eco_review_into_mysql(self, eco_review: EcoReview):
+        cursor = self.connection.cursor()
 
+        query = """
+            INSERT INTO ecoreviews (userName, category, rating, comment, date, source, company, restaurant)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """
+
+        data = (eco_review.userName,
+                eco_review.category,
+                eco_review.rating,
+                eco_review.comment,
+                eco_review.date,
+                eco_review.source,
+                eco_review.company,
+                eco_review.restaurant)
+
+        cursor.execute(query, data)
+        self.connection.commit()
+        cursor.close()
+
+    def score_company_in_mysql(self, company: Company):
+        cursor = self.connection.cursor()
+
+        # Find all the ecoreviews with the company id
+        query = """
+            SELECT rating, category
+            FROM ecoreviews
+            WHERE company = %s
+        """
+
+        print(company.id)
+
+        cursor.execute(query, (company.id,))
+        result = cursor.fetchall()
+        cursor.close()
+
+        ratings = [0 for i in range(3)]
+        ratings_count = [0 for i in range(3)]
+
+        # Compute the ratings for each category
+        for rating, category in result:
+            match category:
+                case "climate" | "waste" | "water":
+                    ratings[0] += rating
+                    ratings_count[0] += 1
+                case "organic":
+                    ratings[1] += rating
+                    ratings_count[1] += 1
+                case "governance" | "social" | "greenwashing":
+                    ratings[2] += rating
+                    ratings_count[2] += 1
+        
+        # Compute the average rating for each category
+        for i in range(3):
+            if ratings_count[i] != 0:
+                ratings[i] /= ratings_count[i]
+            else:
+                ratings[i] = None
+        
+        # Compute the ecoScore
+        ecoScore = 0
+        for rating in ratings:
+            if rating is not None:
+                ecoScore += rating
+        
+        # Update the company in the database
+        cursor = self.connection.cursor()
+        query = """
+            UPDATE companies
+            SET ecoScore = %s, ratings = %s, reviewCount = %s
+            WHERE id = %s
+        """
+        data = (ecoScore,
+                ", ".join([str(rating) for rating in ratings]),
+                sum(ratings_count),
+                company.id)
+        cursor.execute(query, data)
+        self.connection.commit()
+        cursor.close()
+    
+    def score_restaurant_in_mysql(self, restaurant: Restaurant):
+        cursor = self.connection.cursor()
+
+        # Find all the ecoreviews with the restaurant id
+        query = """
+            SELECT rating, category
+            FROM ecoreviews
+            WHERE restaurant = %s
+        """
+
+        cursor.execute(query, (restaurant.id,))
+        result = cursor.fetchall()
+        cursor.close()
+
+        ratings = [0 for i in range(3)]
+        ratings_count = [0 for i in range(3)]
+
+        # Compute the ratings for each category
+        for rating, category in result:
+            match category:
+                case "climate" | "waste" | "water":
+                    ratings[0] += rating
+                    ratings_count[0] += 1
+                case "organic":
+                    ratings[1] += rating
+                    ratings_count[1] += 1
+                case "governance" | "social" | "greenwashing":
+                    ratings[2] += rating
+                    ratings_count[2] += 1
+        
+        # Compute the average rating for each category
+        for i in range(3):
+            if ratings_count[i] != 0:
+                ratings[i] /= ratings_count[i]
+            else:
+                ratings[i] = None
+        
+        # Compute the ecoScore
+        ecoScore = 0
+        for rating in ratings:
+            if rating is not None:
+                ecoScore += rating
+        
+        # Update the company in the database
+        cursor = self.connection.cursor()
+        query = """
+            UPDATE restaurants
+            SET ecoScore = %s, ratings = %s, reviewCount = %s
+            WHERE id = %s
+        """
+        data = (ecoScore,
+                ", ".join([str(rating) for rating in ratings]),
+                sum(ratings_count),
+                restaurant.id)
+        cursor.execute(query, data)
+        self.connection.commit()
+        cursor.close()
+        
     def close_connection(self):
         self.connection.close()
 
 if __name__ == "__main__":
     # Example usage:
     retriever = DataConnector()
-    data = retriever.retrieve_review_from_mysql("trustPilot")
     
-    for row in data:
-        print(row.comment)
+    # Push reviews into MySQL from json file "ecoreviews2.json"
+    with open('ecoreviews2.json', 'r') as fp:
+        data = json.load(fp)
+        for eco_review in data["eco_reviews"]:
+            retriever.push_eco_review_into_mysql(EcoReview(userName=eco_review["userName"], 
+                                                           category=eco_review["category"], 
+                                                           rating=eco_review["rating"], 
+                                                           comment=eco_review["comment"], 
+                                                           date=eco_review["date"], 
+                                                           source=eco_review["source"], 
+                                                           company=eco_review["company"],
+                                                           restaurant=eco_review["restaurant"]))
+
+    # Update the scores of the companies
+    companies, restaurants = retriever.retrieve_comp_rest_from_mysql()
+    for company in companies:
+        retriever.score_company_in_mysql(company)
+    for restaurant in restaurants:
+        retriever.score_restaurant_in_mysql(restaurant)
+    
+    # Retrieve companies and restaurants from MySQL
+    companies, restaurants = retriever.retrieve_comp_rest_from_mysql()
+
+    # Store the companies and restaurants in a json file
+    with open('companies.json', 'w') as fp:
+        companies = [company.model_dump() for company in companies]
+        dict = {"companies": companies}
+        json.dump(dict, fp, ensure_ascii=False, indent=4)
+    with open('restaurants.json', 'w') as fp:
+        restaurants = [restaurant.model_dump() for restaurant in restaurants]
+        dict = {"restaurants": restaurants}
+        json.dump(dict, fp, ensure_ascii=False, indent=4)
 
     retriever.close_connection()

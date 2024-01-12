@@ -17,8 +17,8 @@ body {
 }
 
 h1 {
-    font-family: 'Incosolata', monospace;
-    font-size: 2em;
+    font-family: 'Fredericka the Great ', cursive;
+    font-size: 4em;
     text-align: center;
     font-weight: 400;
     color: #333;
@@ -26,9 +26,43 @@ h1 {
     padding : 10px;
     border-radius : 8px;
     background-color: #ecf0f1;
+    color: #7ce6b1;
 }
 
 img.huechangeR { filter: hue-rotate(500deg); }
 img.huechangeV { filter: hue-rotate(1000deg); }
 img.huechangeO { filter: hue-rotate(880deg); }
 img.huechangeJ { filter: hue-rotate(220deg); }
+
+#reviewsTable {
+    border-collapse: collapse;
+    width: 80%;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#reviewsTable th, #reviewsTable td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+    font-size: 15px;
+}
+
+#reviewsTable th {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+#reviewsTable th:hover {
+    background-color: #45a049;
+}
+
+.stars {
+    color: gold;
+    font-size: 14px;
+}

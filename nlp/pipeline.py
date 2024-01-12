@@ -102,7 +102,7 @@ if __name__ == "__main__":
 
     data = connector.retrieve_review_from_mysql("google")
     dict = {"eco_reviews": []}
-    """
+    data = data[0:500]
     for row in tqdm(data):
         eco_review_list = analyzer.eco_review(row)
         for eco_review in eco_review_list:
@@ -110,10 +110,9 @@ if __name__ == "__main__":
             print("--------------------")
             print(eco_review)
             print("--------------------")
-    """
     
     # Save the eco_review in a json file
-    with open('ecoreviews.json', 'w') as fp:  
+    with open('ecoreviews2.json', 'w') as fp:  
         json.dump(dict, fp, ensure_ascii=False, indent=4)         
 
     data = connector.retrieve_review_from_mysql("trustPilot")
@@ -128,7 +127,7 @@ if __name__ == "__main__":
             print("--------------------")
     
     # Save the eco_review in a json file
-    with open('ecoreviews.json', 'w') as fp:
+    with open('ecoreviews2.json', 'w') as fp:
         json.dump(dict, fp, ensure_ascii=False, indent=4)
             
 
