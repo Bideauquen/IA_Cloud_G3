@@ -19,3 +19,8 @@ pip install -r requirements.txt
 #### To directly have access to the mySql database (for manual check):
 
 ```mysql -h 127.0.0.1 -P 3307 -u root -p password reviews```
+
+## Run the app
+
+Go in the /site repository and run 
+```python app.py```
