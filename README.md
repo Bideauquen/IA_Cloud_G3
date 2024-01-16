@@ -22,5 +22,5 @@ pip install -r requirements.txt
 
 ## Run the app
 
-Go in the /site repository and run 
+Go in the /front repository and run 
 ```python app.py```
